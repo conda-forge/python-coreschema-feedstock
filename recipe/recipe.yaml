@@ -1,0 +1,44 @@
+schema_version: 1
+
+context:
+  version: "0.0.4"
+
+package:
+  name: python-coreschema
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/c/coreschema/coreschema-${{ version }}.tar.gz
+  sha256: 9503506007d482ab0867ba14724b93c18a33b22b6d19fb419ef2d239dd4a1607
+
+build:
+  number: 2
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+
+requirements:
+  host:
+    - python ${{ python_min }}.*
+    - pip
+    - setuptools
+  run:
+    - python >=${{ python_min }}
+    - jinja2
+
+tests:
+  - python:
+      imports:
+        - coreschema
+      pip_check: true
+      python_version: ${{ python_min }}.*
+
+about:
+  summary: Core Schema.
+  license: BSD-3-Clause
+  license_file: LICENSE.md
+  homepage: https://github.com/core-api/python-coreschema
+
+extra:
+  recipe-maintainers:
+    - scopatz
+    - mgorny
